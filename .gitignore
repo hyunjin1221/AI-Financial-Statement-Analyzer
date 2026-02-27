@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+
+# Virtual env
+.venv/
+venv/
+
+# Environment & secrets
+.env
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Streamlit/cache artifacts
+data/raw/
+data/cache/
+data/processed/reports/
+
+# Test / coverage
+.coverage
+htmlcov/

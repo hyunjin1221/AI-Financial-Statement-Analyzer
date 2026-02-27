@@ -1,0 +1,12 @@
+streamlit
+pandas
+numpy
+requests
+beautifulsoup4
+lxml
+plotly
+pydantic
+python-dotenv
+tenacity
+ollama
+pytest

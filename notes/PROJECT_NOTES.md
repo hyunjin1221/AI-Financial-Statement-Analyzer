@@ -1,0 +1,77 @@
+# Project Notes
+
+## 2026-02-27
+- Initialized project scaffold.
+- Added free-only setup files (`requirements.txt`, `.env.example`, `README.md`).
+- Added `CODEX.md` rules for continuous self-correction and notes hygiene.
+- Next: implement Sprint 1 data pipeline (ticker mapping, filing retrieval, parsing).
+- Implemented Sprint 0 code modules:
+  - `app/config.py` for env-based settings
+  - `app/services/sec_client.py` for ticker mapping and latest filing metadata
+  - `app/main.py` Streamlit starter page
+- Added placeholder service/test modules for planned sprints.
+- Added `SPRINT_TASKS.md` for execution tracking.
+- Created local virtual environment `.venv` and installed all dependencies.
+- Verified baseline tests pass: `3 passed`.
+- Verified module imports for `SECClient` and config are working.
+- Observed non-blocking warning: system Python uses LibreSSL (urllib3 warning).
+- Sprint 1 started:
+  - Added filing text download support in SEC client.
+  - Implemented initial filing parser (`filing_to_text`, `extract_sections`) for 10-K and 10-Q headings.
+  - Integrated section extraction preview in Streamlit UI.
+- Corrections made:
+  - Removed fixed `Host` request header to avoid cross-host request issues.
+  - Added `pytest.ini` to resolve app package imports during test collection.
+  - Lowered minimum extracted section length from 80 to 20 to prevent valid short-section drops.
+- Verification:
+  - Test suite now passes: `4 passed`.
+- Sprint 2 core implementation completed:
+  - Added `get_company_facts` in SEC client.
+  - Implemented XBRL concept fallback mapping in `xbrl_mapper.py`.
+  - Implemented ratio engine with quality flags in `ratio_engine.py`.
+  - Integrated financial values + ratio output into Streamlit app.
+- Added tests:
+  - `test_ratio_engine.py` covers formula correctness and error states.
+  - `test_xbrl_mapper.py` covers latest-value selection and fallback mapping.
+- Corrections and preventive rules were appended to `CODEX.md`.
+- Verification: full suite passing (`6 passed`).
+- Sprint 3 core implementation completed:
+  - Implemented local Ollama insight engine (`llm_engine.py`) with prompt template and strict JSON normalization.
+  - Added deterministic merge logic across extracted filing sections.
+  - Integrated AI insights section into Streamlit app with non-blocking error handling.
+- Added tests:
+  - `test_llm_engine.py` for JSON parsing, normalization, and merge behavior.
+- Verification:
+  - Full test suite passing (`9 passed`).
+- Sprint 4 core implementation completed:
+  - Added `peer_engine.py` with SIC peer discovery (bounded scan), peer median aggregation, and company-vs-peer comparison.
+  - Added `summary_engine.py` to generate concise investment research summary text.
+  - Integrated optional peer benchmark and summary rendering into Streamlit app.
+- Added tests:
+  - `test_peer_engine.py` for median aggregation and comparison logic.
+  - `test_summary_engine.py` for summary content generation.
+- Updated README to reflect implemented sprint features and runtime toggles.
+- Verification: full suite passing (`11 passed`).
+- Sprint 5 core implementation completed:
+  - Added Streamlit cache wrappers in `app/utils/caching.py` for repeated SEC calls.
+  - Added markdown report generation in `summary_engine.py` and download button in UI.
+  - Upgraded UI output with dataframe tables and bar charts for ratios and peer deltas.
+  - Added deterministic orchestrator `app/services/analyzer_pipeline.py`.
+- Added tests:
+  - `test_integration_pipeline.py` for mocked end-to-end deterministic flow.
+  - Expanded `test_summary_engine.py` for markdown report output.
+- Verification:
+  - Full suite passing (`13 passed`).
+  - Compile check passed for updated modules.
+- Final production-hardening pass completed:
+  - Added section span-aware extraction in `filing_parser.py` via `extract_sections_with_spans`.
+  - Added AI evidence quote-to-span mapping in `llm_engine.py` (`evidence_spans`).
+  - Added concurrent peer facts processing in `peer_engine.py` using thread pools.
+  - Added report persistence/history in `report_store.py` and integrated save/list controls in Streamlit UI.
+  - Added env config for peer workers and report output directory.
+- Added tests:
+  - `test_report_store.py`
+  - Extended `test_filing_parser.py` and `test_llm_engine.py`
+- Verification:
+  - Full suite passing (`16 passed`).
+  - Compile checks passed for updated modules.
